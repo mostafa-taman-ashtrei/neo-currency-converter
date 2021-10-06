@@ -1,12 +1,12 @@
 import React from 'react';
-import CurrencyInput from './components/currencyInput';
+import CurrencyComponent from './components/currencyComponent';
 import './App.css';
 
 const App: React.FC = () => {
     return (
         <div className="App">
             <h1>Hi There!</h1>
-            <CurrencyInput />
+            <CurrencyComponent />
         </div>
     );
 };
