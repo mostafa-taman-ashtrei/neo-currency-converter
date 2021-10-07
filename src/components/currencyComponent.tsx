@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { v4 } from 'uuid';
-
 import convertCurrency from '../api/convertCurrency';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { historyType } from '../types';
 import currencyOptions from '../utils/currencies';
+import speak from '../utils/speak';
+import HistoryComponent from './historyComponent';
 
 const CurrencyComponent: React.FC = () => {
     const [fromCurrency, setFromCurrency] = useLocalStorage<string>('fromCurrency', 'USD');
@@ -23,6 +23,7 @@ const CurrencyComponent: React.FC = () => {
             const conversion = `${amount} ${fromCurrency} is ${res.data.toFixed(2)} ${toCurrency}`;
             console.log(conversion);
             setHistory([...history, { date: new Date().toISOString().slice(0, 10), conversion }]);
+            speak(conversion);
         }
 
         return setLoading(false);
@@ -71,27 +72,10 @@ const CurrencyComponent: React.FC = () => {
 
             {history.length > 0
                 ? (
-                    <ol>
-                        <button
-                            type="button"
-                            onClick={() => setHistory([])}
-                        >
-                            Clear history
-                        </button>
-                        <h2>
-                            You have
-                            {' '}
-                            {history.length}
-                            {' '}
-                            items in your history
-                        </h2>
-                        {history.map((h: historyType) => (
-                            <li key={v4()}>
-                                {h.date}
-                                {h.conversion}
-                            </li>
-                        ))}
-                    </ol>
+                    <>
+                        <button type="button" onClick={() => setHistory([])}>Clear history</button>
+                        <HistoryComponent history={history} />
+                    </>
                 )
                 : null}
         </>
