@@ -70,7 +70,7 @@ const CurrencyPage: React.FC = () => {
                 align="center"
             >
                 <Box h="40px">
-                    <Select width="md" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)}>
+                    <Select width="md" color="tomato" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)}>
                         {currencyOptions.map((option) => (
                             <option key={option} value={option}>{option}</option>
                         ))}
@@ -101,6 +101,7 @@ const CurrencyPage: React.FC = () => {
                 <Box h="40px">
                     <NumberInput
                         precision={2}
+                        color="tomato"
                         w="lg"
                         m={3}
                         min={0}
