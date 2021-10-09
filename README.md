@@ -1,6 +1,44 @@
-# Getting Started with Create React App
+# **Currency Converter**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the poject for this week on
+
+## Languages and Tools Used:
+
+- <img  alt="Visual Studio Code" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/visual-studio-code/visual-studio-code.png" /> vs code
+
+
+- <img   alt="Typescript" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" /> Typescript
+
+- <img   alt="React" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" /> React
+
+
+- <img   alt="eslint" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/eslint/eslint.png" /> Eslint
+
+
+- <img   alt="Git" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png" /> Git
+
+
+# **Getting Started**
+
+Instructions to get the project up and running on your local machine
+
+## Installation
+1. clone the project using git or download zip
+```bash
+git clone https://github.com/neoScriptscode/neo-currency-converter.git
+```
+2. Install dependencies
+```bash
+cd neo-currency-converter && npm i
+```
+
+3. Create a .env.local file and add the gollowing values: 
+    * REACT_APP_EXCHANGE_RATES_API_KEY
+    * REACT_APP_API_KEY
+    * REACT_APP_API_URL
+
+<br />
+
 
 ## Available Scripts
 
@@ -18,6 +56,14 @@ You will also see any lint errors in the console.
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm lint`
+
+scans your project for any eslint errors according to the rules specified in .eslintrc.json
+
+### `npm lint:fix`
+
+fixes all the eslint errors found in your project
 
 ### `npm run build`
 
@@ -38,9 +84,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
