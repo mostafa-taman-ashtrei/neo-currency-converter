@@ -4,9 +4,9 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { historyType } from '../types';
 import currencyOptions from '../utils/currencies';
 import speak from '../utils/speak';
-import HistoryComponent from './historyComponent';
+import HistoryComponent from '../components/History';
 
-const CurrencyComponent: React.FC = () => {
+const CurrencyPage: React.FC = () => {
     const [fromCurrency, setFromCurrency] = useLocalStorage<string>('fromCurrency', 'USD');
     const [toCurrency, setToCurrency] = useLocalStorage<string>('toCurrency', 'JPY');
     const [amount, setAmount] = useLocalStorage<number>('amount', 1);
@@ -82,4 +82,4 @@ const CurrencyComponent: React.FC = () => {
     );
 };
 
-export default CurrencyComponent;
+export default CurrencyPage;
