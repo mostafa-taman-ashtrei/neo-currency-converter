@@ -10,6 +10,7 @@ import { historyType } from '../types';
 import currencyOptions from '../utils/currencies';
 import speak from '../utils/speak';
 import HistoryComponent from '../components/History';
+import AlertComponent from '../components/Alert';
 
 const CurrencyPage: React.FC = () => {
     const [fromCurrency, setFromCurrency] = useLocalStorage<string>('fromCurrency', 'USD');
@@ -17,14 +18,18 @@ const CurrencyPage: React.FC = () => {
     const [amount, setAmount] = useLocalStorage<number>('amount', 1);
     const [history, setHistory] = useLocalStorage<historyType[]>('history', []);
     const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async () => {
         setLoading(true);
         const res = await convertCurrency(fromCurrency, toCurrency, amount);
 
-        if (res.e != null) alert(`Error: ${res.e}`);
+        if (res.e != null) {
+            setLoading(false);
+            return setError(res.e);
+        }
 
-        else if (res.data != null) {
+        if (res.data != null) {
             const conversion = `${amount} ${fromCurrency} is ${res.data.toFixed(2)} ${toCurrency}`;
             console.log(conversion);
 
@@ -58,13 +63,14 @@ const CurrencyPage: React.FC = () => {
 
     return (
         <Box m={3}>
+            {error !== null ? <AlertComponent error={error} setError={setError} /> : null}
             <VStack
                 m={3}
                 spacing={4}
                 align="center"
             >
                 <Box h="40px">
-                    <Select width="sm" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)}>
+                    <Select width="md" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)}>
                         {currencyOptions.map((option) => (
                             <option key={option} value={option}>{option}</option>
                         ))}
@@ -113,7 +119,7 @@ const CurrencyPage: React.FC = () => {
                 <Spacer />
 
                 <Box h="40px">
-                    <Button colorScheme="blackAlpha" color="tomato" borderColor="tomato" w="lg" onClick={() => handleSubmit()}>Convert</Button>
+                    <Button colorScheme="blackAlpha" width="md" color="tomato" borderColor="tomato" w="lg" onClick={() => handleSubmit()}>Convert</Button>
                 </Box>
             </VStack>
 
