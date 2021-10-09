@@ -1,6 +1,7 @@
 # **Currency Converter**
 
-This is the poject for this week on
+This is the poject for this week challenge a currency converter with some extra features
+like storing history in local storage and adding speech.
 
 ## Languages and Tools Used:
 
