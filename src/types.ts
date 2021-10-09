@@ -6,5 +6,8 @@ export interface currencyData {
 
 export interface historyType {
     date: Date;
-    conversion: string;
+    amount: number;
+    result: number;
+    to: string;
+    from: string;
 }

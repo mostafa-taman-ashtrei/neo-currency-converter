@@ -45,13 +45,14 @@ const LandingPage: React.FC = () => {
                         <Text as="span" color="tomato">
                             NEO currency converter
                         </Text>
-                        , Convert 100+ currency
+                        , Convert 100+ currencies now
                         <br />
 
                     </Heading>
                     <Text color="gray.500">
                         NEO currency converter allows you convert one currency to another, it support over 100+
-                        currencies and you can view your history any time since it is stored in local sotrage.
+                        currencies and you can view your history any time since it is stored in local sotrage. The
+                        ui si powered by chakura ui while the app is built using Typescript and React.js.
                     </Text>
                     <Stack
                         direction="column"

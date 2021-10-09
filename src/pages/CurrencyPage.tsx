@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import {
+    Select, Box, VStack, Button, IconButton, Center, Spinner, Spacer,
+    NumberIncrementStepper, NumberInput, NumberDecrementStepper, NumberInputField, NumberInputStepper,
+} from '@chakra-ui/react';
+import { ArrowUpDownIcon, DeleteIcon } from '@chakra-ui/icons';
 import convertCurrency from '../api/convertCurrency';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { historyType } from '../types';
@@ -22,63 +27,115 @@ const CurrencyPage: React.FC = () => {
         else if (res.data != null) {
             const conversion = `${amount} ${fromCurrency} is ${res.data.toFixed(2)} ${toCurrency}`;
             console.log(conversion);
-            setHistory([...history, { date: new Date().toISOString().slice(0, 10), conversion }]);
+
+            setHistory([...history, {
+                date: new Date().toISOString().slice(0, 10),
+                amount,
+                to: toCurrency,
+                from: fromCurrency,
+                result: res.data.toFixed(2),
+            }]);
             speak(conversion);
         }
 
         return setLoading(false);
     };
 
-    if (loading) return <h1>Loading ...</h1>;
+    if (loading) {
+        return (
+            <Center>
+                <Spinner
+                    thickness="15px"
+                    m={10}
+                    speed="0.3s"
+                    emptyColor="tomato"
+                    color="black"
+                    size="xl"
+                />
+            </Center>
+        );
+    }
 
     return (
-        <>
-            <input
-                type="number"
-                className="input"
-                value={amount}
-                onChange={(e) => {
-                    if (parseFloat(e.target.value) > 0) return setAmount(parseFloat(e.target.value));
-                    return alert('Amount has to be 1 or higher');
-                }}
-            />
-
-            <select value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)}>
-                {currencyOptions.map((option) => (
-                    <option key={option} value={option}>{option}</option>
-                ))}
-            </select>
-
-            <select value={toCurrency} onChange={(e) => setToCurrency(e.target.value)}>
-                {currencyOptions.map((option) => (
-                    <option key={option} value={option}>{option}</option>
-                ))}
-            </select>
-            <br />
-
-            <button
-                type="button"
-                onClick={() => {
-                    setFromCurrency(toCurrency);
-                    setToCurrency(fromCurrency);
-                }}
+        <Box m={3}>
+            <VStack
+                m={3}
+                spacing={4}
+                align="center"
             >
-                ↔️
-            </button>
-            <br />
+                <Box h="40px">
+                    <Select width="sm" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value)}>
+                        {currencyOptions.map((option) => (
+                            <option key={option} value={option}>{option}</option>
+                        ))}
+                    </Select>
+                </Box>
+                <Box h="40px">
+                    <IconButton
+                        variant="outline"
+                        color="tomato"
+                        borderColor="tomato"
+                        aria-label="Swipe currencies"
+                        fontSize="20px"
+                        icon={<ArrowUpDownIcon />}
+                        onClick={() => {
+                            setFromCurrency(toCurrency);
+                            setToCurrency(fromCurrency);
+                        }}
+                    />
+                </Box>
+                <Box h="40px">
+                    <Select width="md" color="tomato" value={toCurrency} onChange={(e) => setToCurrency(e.target.value)}>
+                        {currencyOptions.map((option) => (
+                            <option key={option} value={option}>{option}</option>
+                        ))}
+                    </Select>
+                </Box>
 
-            <button type="button" onClick={() => handleSubmit()}>Convert</button>
-            <br />
+                <Box h="40px">
+                    <NumberInput
+                        precision={2}
+                        w="lg"
+                        m={3}
+                        min={0}
+                        step={0.5}
+                        value={parseFloat(amount)}
+                        onChange={(e) => { setAmount(parseFloat(e)); }}
+                    >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                        </NumberInputStepper>
+                    </NumberInput>
+                </Box>
 
-            {history.length > 0
-                ? (
-                    <>
-                        <button type="button" onClick={() => setHistory([])}>Clear history</button>
-                        <HistoryComponent history={history} />
-                    </>
-                )
-                : null}
-        </>
+                <Spacer />
+
+                <Box h="40px">
+                    <Button colorScheme="blackAlpha" color="tomato" borderColor="tomato" w="lg" onClick={() => handleSubmit()}>Convert</Button>
+                </Box>
+            </VStack>
+
+            {
+                history.length > 0
+                    ? (
+                        <Box m={3}>
+                            <IconButton
+                                variant="outline"
+                                color="tomato"
+                                borderColor="tomato"
+                                aria-label="Clear History"
+                                fontSize="20px"
+                                icon={<DeleteIcon />}
+                                onClick={() => setHistory([])}
+                            />
+                            <HistoryComponent history={history} />
+                        </Box>
+                    )
+                    : null
+            }
+        </Box>
     );
 };
 
